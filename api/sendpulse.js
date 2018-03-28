@@ -81,7 +81,7 @@ function sendRequest(path, method, data, useToken, callback){
     headers['Content-Type'] = 'application/json';
     headers['Content-Length'] =  Buffer.byteLength(JSON.stringify(data));
 
-    if (useToken && TOKEN.length) {
+    if (useToken && TOKEN && TOKEN.length) {
         headers['Authorization'] = 'Bearer '+TOKEN;
     }
     if (method === undefined) {
@@ -125,6 +125,9 @@ function sendRequest(path, method, data, useToken, callback){
             });
         }
     );
+
+    req.on('error', function(e) {});
+
     req.write(JSON.stringify(data));
     req.end();
 }
